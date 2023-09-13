@@ -3,7 +3,8 @@ import matplotlib.pyplot as plt
 
 # Step 1: Read data from the file
 data = []
-with open("gap_SCF_EPS_LDOS_0.300_ENERGY_WINDOW_9.000", "r") as file:
+filename = "gap_SCF_EPS_LDOS_0.300_ENERGY_WINDOW_9.000"
+with open(filename, "r") as file:
     for line in file:
         x, y, f_xy = map(float, line.split())
         data.append((x, y, f_xy))
@@ -31,11 +32,11 @@ contour = plt.contourf(X, Y, f_xy_grid, cmap='viridis', levels=100)
 
 # Add color bar
 cbar = plt.colorbar(contour)
-cbar.set_label('f(x, y)')
+cbar.set_label('Gap (eV)')
 
-plt.xlabel('x')
-plt.ylabel('y')
-plt.title('Continuous Color Map of f(x, y)')
+plt.xlabel('x (Angström)')
+plt.ylabel('y (Angström)')
+plt.title('Local bandgap of file '+filename)
 
 # Specify the file path where you want to save the plot
 output_file = "continuous_color_map.png"
