@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Step 1: Specify the directory containing the data files
-data_directory = "."
+data_directory = "01_700_atom_structure_windows_up_to_5_eV"
 
 # Step 2: Get a list of all files in the directory
 data_files = [f for f in os.listdir(data_directory)]
@@ -13,6 +13,9 @@ for filename in data_files:
     # Read data from the file
     data = []
     with open(os.path.join(data_directory, filename), "r") as file:
+
+        print(filename)
+
         for line in file:
             x, y, f_xy = map(float, line.split())
             data.append((x, y, f_xy))
