@@ -1,0 +1,108 @@
+&GLOBAL
+  PROJECT  MoS2
+  PRINT_LEVEL MEDIUM
+  RUN_TYPE ENERGY
+  &TIMINGS
+     THRESHOLD 0.0001
+  &END
+!  TRACE
+&END GLOBAL
+&FORCE_EVAL
+  METHOD Quickstep
+  &DFT
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT_UZH
+    BASIS_SET_FILE_NAME  BASIS_MOLOPT_UCL
+    BASIS_SET_FILE_NAME  /scratch/hpc-prf-eprop2d/eprop2d1_Jan/02_MoS2_MoSe2_WS2_WSe2/BASIS_Mo_S
+    BASIS_SET_FILE_NAME  /scratch/hpc-prf-eprop2d/eprop2d1_Jan/02_MoS2_MoSe2_WS2_WSe2/BASIS_W_Se
+    BASIS_SET_FILE_NAME  /scratch/hpc-prf-eprop2d/eprop2d1_Jan/08_develop_new_GW/12_clone_GW_inputs_outputs/Inputs_outputs_low_scaling_GW_TMDC/BASIS_MoS
+    BASIS_SET_FILE_NAME  /scratch/hpc-prf-eprop2d/eprop2d1_Jan/08_develop_new_GW/12_clone_GW_inputs_outputs/Inputs_outputs_low_scaling_GW_TMDC/BASIS_SET_MoS_MOLOPT_robust
+    BASIS_SET_FILE_NAME  /scratch/hpc-prf-eprop2d/eprop2d1_Jan/08_develop_new_GW/12_clone_GW_inputs_outputs/Inputs_outputs_low_scaling_GW_TMDC/BASIS_SET_W_Se_V_Nb_Ta_MOLOPT_robust
+    SORT_BASIS EXP
+!    POTENTIAL_FILE_NAME  GTH_POTENTIALS
+    POTENTIAL_FILE_NAME  /pc2/groups/hpc-prf-eprop2d/eprop2d1_Jan/02_compile_CP2K/10_continue_from_trunk_and_copy_07/cp2k/data/GTH_SOC_POTENTIALS
+    CHARGE 0
+    &MGRID
+      CUTOFF  500
+      REL_CUTOFF  100
+    &END MGRID
+    &QS
+      METHOD GPW
+      EPS_DEFAULT 1.0E-40
+      EPS_PGF_ORB 1.0E-40
+    &END QS
+    &SCF
+      SCF_GUESS RESTART
+      EPS_SCF 1.0E-9
+      MAX_SCF 100
+      &PRINT
+        &RESTART ON
+        &END
+      &END
+      ADDED_MOS -1
+      &MIXING
+          METHOD BROYDEN_MIXING
+          ALPHA 0.1
+          BETA 1.5
+          NBROYDEN 8
+      &END
+    &END SCF
+    &XC
+      &XC_FUNCTIONAL LDA
+      &END XC_FUNCTIONAL
+    &END XC
+  &END DFT
+  &PROPERTIES
+    &BANDSTRUCTURE
+      &GW
+        NUM_TIME_FREQ_POINTS         10
+        MEMORY_PER_PROC               4
+      &END
+      &SOC
+        ENERGY_WINDOW 10.0
+      &END 
+      &DOS
+        KPOINTS 2 2 1
+      &END 
+      &LOCAL_VBM_CBM_GAP
+        INTEGRATION Z
+        EPS_LDOS      1.0 0.7 0.5 0.4 0.3 0.2 0.1 0.03 0.01
+        ENERGY_WINDOW 1 2 3 4 5
+        ENERGY_STEP   0.02
+        BIN_MESH      10 10
+      &END
+    &END
+  &END
+  &SUBSYS
+    &CELL
+A 34.8495 2.8743383151605517 0
+B 14.935500000000005 31.61772146676607 0
+C 0 0 20
+      PERIODIC XY
+    &END CELL
+    &TOPOLOGY
+            COORD_FILE_NAME   struc.xyz
+            COORD_FILE_FORMAT XYZ
+    &END TOPOLOGY
+    &KIND Mo
+      BASIS_SET ORB    TZVP-MOLOPT-SR-GTH_robust_12
+      BASIS_SET RI_AUX def2-SVP-RIFIT-mod-2
+      POTENTIAL        GTH-PADE-q14
+    &END KIND
+    &KIND S
+      BASIS_SET ORB    TZVP-MOLOPT-GTH_robust_9
+      BASIS_SET RI_AUX def2-SVP-RIFIT-mod-1
+      POTENTIAL        GTH-PADE-q6
+    &END KIND
+    &KIND W
+      BASIS_SET ORB    TZVP-MOLOPT-SR-GTH_robust_1
+      BASIS_SET RI_AUX def2-SVP-RIFIT-mod-3
+      POTENTIAL        GTH-PADE-q14
+    &END KIND
+    &KIND Se
+      BASIS_SET ORB    TZVP-MOLOPT-SR-GTH
+      BASIS_SET RI_AUX def2-SVP-RIFIT-mod-3
+      POTENTIAL        GTH-PADE-q6
+    &END KIND
+  &END SUBSYS
+&END FORCE_EVAL
