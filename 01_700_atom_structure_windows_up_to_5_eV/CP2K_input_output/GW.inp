@@ -58,9 +58,9 @@
 !        NUM_TIME_FREQ_POINTS         10
 !        MEMORY_PER_PROC               4
 !      &END
-      &SOC
-        ENERGY_WINDOW 10.0
-      &END 
+!      &SOC
+!        ENERGY_WINDOW 10.0
+!      &END 
       &DOS
         KPOINTS 2 2 1
       &END 
