@@ -54,10 +54,10 @@
   &END DFT
   &PROPERTIES
     &BANDSTRUCTURE
-      &GW
-        NUM_TIME_FREQ_POINTS         10
-        MEMORY_PER_PROC               4
-      &END
+!      &GW
+!        NUM_TIME_FREQ_POINTS         10
+!        MEMORY_PER_PROC               4
+!      &END
       &SOC
         ENERGY_WINDOW 10.0
       &END 
